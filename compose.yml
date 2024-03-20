@@ -1,0 +1,36 @@
+services:
+  ## this is app configuration 
+  app:
+    image: "pythonapp:0.1.0"
+    ports:
+      - "8000:5000"
+    networks:
+      - application
+      - database
+    volumes:
+      - app_data:/code
+  
+  ## this is db configuration
+  redis:
+    image: "redis:alpine"
+    networks:
+      - database
+    volumes:
+      - db_data:/db
+
+## Networks
+networks:
+  application:
+    name: application
+    driver: overlay
+    attachable: true
+  
+  database:
+    name: database
+    driver: overlay
+    attachable: true 
+
+## Volumes
+volumes:
+  app_data:
+  db_data:
